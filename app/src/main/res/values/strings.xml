@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Custom_Notifications</string>
+    <string name="progress_notification">Progress_Notification</string>
+</resources>
