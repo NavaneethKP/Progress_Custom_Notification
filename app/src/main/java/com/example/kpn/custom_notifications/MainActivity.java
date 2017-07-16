@@ -1,19 +1,24 @@
 package com.example.kpn.custom_notifications;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
+import android.widget.RemoteViews;
 
 public class MainActivity extends AppCompatActivity {
 
-    int NOTIFICATION_ID=1;
+    String TEXT="You have a update for Saarang Events. "
+            +"Events timing changed from 4 pm to 6 pm";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
 
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0;i<=100;i+=5)
                 {
                     builder.setProgress(100,i,false);
-                    nm.notify(NOTIFICATION_ID,builder.build());
+                    nm.notify(1,builder.build());
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -45,9 +50,33 @@ public class MainActivity extends AppCompatActivity {
 
                 builder.setProgress(0,0,false);
                 builder.setContentText("Download Complete");
-                nm.notify(NOTIFICATION_ID,builder.build());
+                nm.notify(1,builder.build());
             }
         }).start();
+    }
+
+    public void custom_notification(View view)
+    {
+        Intent i = new Intent(this,result.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pi = PendingIntent.getActivity(this,123,i,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(this);
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        //ALLOW US TO CREATE CUSTOM LAYOUT
+        RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.custom_notification);
+        remoteViews.setTextViewText(R.id.title,"NEW MESSAGE!!!");
+        remoteViews.setImageViewResource(R.id.image,R.drawable.saarang2);
+        remoteViews.setTextViewText(R.id.text,TEXT);
+
+
+        builder.setSmallIcon(R.mipmap.ic_launcher).setAutoCancel(true);
+        builder.setCustomBigContentView(remoteViews);
+        builder.setContentIntent(pi);
+
+        nm.notify(2,builder.build());
+
     }
 
 }

@@ -16,4 +16,14 @@
         android:layout_marginTop="109dp"
         android:onClick="notify_progress"
         android:text="@string/progress_notification" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:onClick="custom_notification"
+        android:text="@string/custom_notification" />
 </RelativeLayout>
